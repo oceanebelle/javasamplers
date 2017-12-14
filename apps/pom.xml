@@ -19,5 +19,6 @@
 
   <modules>
     <module>javasamplers.apps.helloboot</module>
+    <module>javasamplers.apps.dbdemo</module>
   </modules>
 </project>
