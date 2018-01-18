@@ -21,5 +21,6 @@
     <module>javasamplers.apps.helloboot</module>
     <module>javasamplers.apps.dbdemo</module>
     <module>javasamplers.apps.webdemo</module>
+    <module>javasamplers.apps.jettydemo</module>
   </modules>
 </project>
