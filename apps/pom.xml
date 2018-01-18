@@ -22,5 +22,6 @@
     <module>javasamplers.apps.dbdemo</module>
     <module>javasamplers.apps.webdemo</module>
     <module>javasamplers.apps.jettydemo</module>
+    <module>javasamplers.apps.wardemo</module>
   </modules>
 </project>
