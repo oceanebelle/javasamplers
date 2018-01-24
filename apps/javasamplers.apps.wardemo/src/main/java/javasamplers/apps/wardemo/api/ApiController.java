@@ -8,6 +8,6 @@ public class ApiController {
 
     @GetMapping
     public String status() {
-        return "Alive";
+        return "Alive and WELL and more";
     }
 }

@@ -13,6 +13,8 @@
   <artifactId>apps</artifactId>
 
 
+
+
   <name>apps</name>
 
   <packaging>pom</packaging>
@@ -23,5 +25,6 @@
     <module>javasamplers.apps.webdemo</module>
     <module>javasamplers.apps.jettydemo</module>
     <module>javasamplers.apps.wardemo</module>
+      <module>javasamplers.apps.kafkaadventures</module>
   </modules>
 </project>

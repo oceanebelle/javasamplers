@@ -11,7 +11,7 @@
   <groupId>com.oceanebelle.javasamplers.apps</groupId>
   <artifactId>javasamplers.apps.helloboot</artifactId>
 
-  <packaging>jar</packaging>
+
 
   <name>javasamplers.apps.helloboot</name>
 
