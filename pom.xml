@@ -93,6 +93,7 @@
     <module>apps</module>
       <module>cassandrasample</module>
       <module>angularspring</module>
+    <module>entities-jpa</module>
   </modules>
 
 
