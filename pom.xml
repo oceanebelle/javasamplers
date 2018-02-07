@@ -92,6 +92,7 @@
   <modules>
     <module>apps</module>
       <module>cassandrasample</module>
+      <module>angularspring</module>
   </modules>
 
 

@@ -3,5 +3,3 @@ spring:
     cassandra:
       cluster-name: 10.0.1.10
       keyspace-name: dev
-      # N.B. must be NONE in production
-      schema-action: recreate
