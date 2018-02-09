@@ -94,6 +94,7 @@
       <module>cassandrasample</module>
       <module>angularspring</module>
     <module>entities-jpa</module>
+      <module>all-about-tests</module>
   </modules>
 
 
