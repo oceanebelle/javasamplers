@@ -19,3 +19,5 @@ To run both IT and UT
 ```bash
     mvn -Pfull verify
 ```
+
+Additional supporting actions can be setup during pre-integration phase using the antrun plugin

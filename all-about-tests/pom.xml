@@ -80,7 +80,48 @@
                         <id>integration-test</id>
                         <goals>
                             <goal>integration-test</goal>
-                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <!-- Run some tasks in preparation for the it test. eg. download files and prepare stuff  -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <id>SETUP IT</id>
+                        <phase>pre-integration-test</phase>
+                        <configuration>
+                            <skip>${skipIT}</skip>
+                            <target>
+                                <echo>Setting up stuff for integration tests...</echo>
+                                <!-- Call any ant command here -->
+                                <exec executable="cmd.exe">
+                                    <arg line="echo TEST TEST TEST"></arg>
+                                </exec>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>CLEANUP IT</id>
+                        <phase>post-integration-test</phase>
+                        <configuration>
+                            <skip>${skipIT}</skip>
+                            <target>
+                                <echo>Clean up stuff after integration tests!</echo>
+                                <!-- Call any ant command here -->
+                                <exec executable="cmd.exe">
+                                    <arg line="echo TEST TEST TEST"></arg>
+                                </exec>
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
                         </goals>
                     </execution>
                 </executions>
