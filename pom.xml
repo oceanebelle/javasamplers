@@ -10,20 +10,31 @@
 
   <properties>
     <spring.boot>1.5.9.RELEASE</spring.boot>
+    <camel.version>2.20.0</camel.version>
     <!--<spring-kafka.version>2.0.2.RELEASE</spring-kafka.version>-->
   </properties>
 
   <dependencyManagement>
     <dependencies>
 
-      <dependency>
-        <!-- Import dependency management from Spring Boot -->
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-dependencies</artifactId>
-        <version>${spring.boot}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
+
+        <!-- Spring Boot BOM -->
+        <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-dependencies</artifactId>
+          <version>${spring.boot}</version>
+          <type>pom</type>
+          <scope>import</scope>
+        </dependency>
+        <!-- Camel BOM -->
+        <dependency>
+          <groupId>org.apache.camel</groupId>
+          <artifactId>camel-spring-boot-dependencies</artifactId>
+          <version>${camel.version}</version>
+          <type>pom</type>
+          <scope>import</scope>
+        </dependency>
+
 
 
       <dependency>
@@ -95,6 +106,7 @@
       <module>angularspring</module>
     <module>entities-jpa</module>
       <module>all-about-tests</module>
+      <module>camel-camel-camel</module>
   </modules>
 
 
