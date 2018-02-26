@@ -26,6 +26,19 @@
             <artifactId>spring-kafka</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka-clients</artifactId>
+            <version>0.10.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka_2.10</artifactId>
+            <version>0.10.1.1</version>
+            <scope>test</scope>
+        </dependency>
+
         <!-- Higher level of integration -->
         <!--
             spring-integration-core framework library to have highly modular pieces of code

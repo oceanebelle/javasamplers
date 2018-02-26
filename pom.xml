@@ -9,7 +9,7 @@
   <packaging>pom</packaging>
 
   <properties>
-    <spring.boot>1.5.9.RELEASE</spring.boot>
+    <spring.boot>1.5.8.RELEASE</spring.boot>
     <camel.version>2.20.0</camel.version>
     <!--<spring-kafka.version>2.0.2.RELEASE</spring-kafka.version>-->
   </properties>
@@ -26,14 +26,7 @@
           <type>pom</type>
           <scope>import</scope>
         </dependency>
-        <!-- Camel BOM -->
-        <dependency>
-          <groupId>org.apache.camel</groupId>
-          <artifactId>camel-spring-boot-dependencies</artifactId>
-          <version>${camel.version}</version>
-          <type>pom</type>
-          <scope>import</scope>
-        </dependency>
+
 
 
 
@@ -77,6 +70,9 @@
               <goals>
                 <goal>repackage</goal>
               </goals>
+              <configuration>
+                <classifier>runnable</classifier>
+              </configuration>
             </execution>
           </executions>
         </plugin>
