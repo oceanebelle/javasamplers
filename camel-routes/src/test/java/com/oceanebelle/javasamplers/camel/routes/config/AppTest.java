@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -18,16 +19,18 @@ import static org.awaitility.Awaitility.await;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = AppConfig.class)
+@DirtiesContext
 public class AppTest {
-    public static final AtomicBoolean isComplete = new AtomicBoolean(false);
+    public static final AtomicBoolean IS_COMPLETE = new AtomicBoolean(false);
 
     @Autowired
     CamelContext camelContext;
 
     @Before
     public void setup() throws Exception {
-        isComplete.set(false);
+        IS_COMPLETE.set(false);
 
+        // The routes have been set to autoStart=false in test so modification is allowed.
         // Modify the routes with Advicewith
         camelContext.getRouteDefinition(AppRoutes.DATA_LOAD_INPUT_ID).adviceWith(camelContext, new AdviceWithRouteBuilder() {
             @Override
@@ -39,7 +42,7 @@ public class AppTest {
                 weaveByToUri("http:.*").remove();
 
                 // Set the async flag to complete at the end of the route
-                weaveAddLast().process().body(x -> isComplete.set(true));
+                weaveAddLast().process().body(x -> IS_COMPLETE.set(true));
             }
         });
 
@@ -47,12 +50,12 @@ public class AppTest {
     }
 
     @Test
-    public void testRoute() {
-        // Starts the test
+    public void testReadXMLRoute() {
+        // Starts the test and the route
         ProducerTemplate producer = camelContext.createProducerTemplate();
         producer.asyncRequestBody("direct:test", null);
 
-        // Wait until the given completed
-        await().atMost(5, SECONDS).until(() -> isComplete.get());
+        // Wait until the route completes
+        await().atMost(5, SECONDS).untilTrue(IS_COMPLETE);
     }
 }
