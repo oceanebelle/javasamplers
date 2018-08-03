@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertNotNull;
 
-@SpringBootTest(classes = {AppConfig.class})
+@SpringBootTest(classes = {AppConfig.class, TestConfig.class})
 @RunWith(SpringRunner.class)
 public class ContextLoadTest {
 

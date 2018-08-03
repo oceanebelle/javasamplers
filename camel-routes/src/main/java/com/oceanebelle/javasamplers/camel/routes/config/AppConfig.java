@@ -28,21 +28,16 @@ public class AppConfig {
     ApplicationContext context;
 
     @Bean
+    @ConditionalOnMissingBean(CamelContext.class)
     public CamelContext camelContext() {
         return new SpringCamelContext(context);
     }
 
     @Bean
-    @ConditionalOnMissingBean(RoutesCollector.class)
-    RoutesCollector routesCollector(ApplicationContext applicationContext, CamelConfigurationProperties config) {
+    //@ConditionalOnMissingBean(RoutesCollector.class)
+    RoutesCollector routesCollector(ApplicationContext applicationContext, CamelConfigurationProperties camelConfigurationProperties) {
         Collection<CamelContextConfiguration> configurations = applicationContext.getBeansOfType(CamelContextConfiguration.class).values();
-        return new RoutesCollector(applicationContext, new ArrayList(configurations), config);
-    }
-
-    @Bean
-    @ConditionalOnMissingBean(CamelConfigurationProperties.class)
-    CamelConfigurationProperties camelConfigurationProperties() {
-        return new CamelConfigurationProperties();
+        return new RoutesCollector(applicationContext, new ArrayList(configurations), camelConfigurationProperties);
     }
 
     /**

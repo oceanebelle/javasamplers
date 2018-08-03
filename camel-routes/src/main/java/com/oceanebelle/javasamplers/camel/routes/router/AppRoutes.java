@@ -1,8 +1,10 @@
 package com.oceanebelle.javasamplers.camel.routes.router;
 
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.oceanebelle.javasamplers.camel.routes.dto.Person;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.jacksonxml.JacksonXMLDataFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +24,13 @@ public class AppRoutes extends RouteBuilder {
     private static final String SYSTEM_OUT_ENDPOINT = "stream:out";
     private static final String SPLIT_USING_XPATH_ENDPOINT = "direct:splitWithXpath";
     private static final String SPLIT_USING_STAX_ENDPOINT = "direct:splitWithStax";
+    private static final String SPLIT_USING_TOKENIZE_XML_ENDPOINT = "direct:splitWithTokenize";
+
     private static final String PROCESS_INPUT_ROUTE_ID = "PROCESS_INPUT_ROUTE_ID";
     public static final String SPLIT_USING_XPATH_ENDPOINT_ID = "SPLIT_USING_XPATH_ENDPOINT_ID";
+    public static final String SPLIT_USING_TOKENIZE_XML_ENDPOINT_ID = "SPLIT_USING_TOKENIZE_XML_ENDPOINT_ID";
     public static final String SPLIT_USING_STAX_ENDPOINT_ID = "SPLIT_USING_STAX_ENDPOINT_ID";
+
 
     private final int serverPort;
     private final boolean autoStart;
@@ -55,7 +61,8 @@ public class AppRoutes extends RouteBuilder {
                 .log("${in.headers}")
 //                .multicast()
 //                    .to(SPLIT_USING_XPATH_ENDPOINT)
-                    .to(SPLIT_USING_STAX_ENDPOINT)
+                    .to(SPLIT_USING_TOKENIZE_XML_ENDPOINT)
+//                    .to(SPLIT_USING_STAX_ENDPOINT)
 //                .end()
                 .setBody(constant(null)) // clear the body
                 .log("DONE");
@@ -65,8 +72,20 @@ public class AppRoutes extends RouteBuilder {
                 .autoStartup(autoStart)
                 .routeId(SPLIT_USING_XPATH_ENDPOINT_ID)
                 .log("Loading using XPATH")
-                .split(xpath("/root/person")).streaming().parallelProcessing()
-                    .unmarshal().jacksonxml(Person.class)
+                .split(xpath("/top/root/person")).streaming().parallelProcessing()
+                    .unmarshal(jacksonXml(Person.class))
+                    .log("${body}")
+                .end()
+                .log("${messageHistory(true)}");
+
+        // Less memory intensive than xpath version
+        from(SPLIT_USING_TOKENIZE_XML_ENDPOINT)
+                .autoStartup(autoStart)
+                .routeId(SPLIT_USING_TOKENIZE_XML_ENDPOINT_ID)
+                .log("Loading using TOKENIZE XML")
+                .split().tokenizeXML("person")
+                    .streaming().parallelProcessing()
+                    .unmarshal(jacksonXml(Person.class))
                     .log("${body}")
                 .end()
                 .log("${messageHistory(true)}");
@@ -81,4 +100,28 @@ public class AppRoutes extends RouteBuilder {
                 .end()
                 .log("${messageHistory(true)}");
     }
+
+    /**
+     * defines how an xml is deserialized
+     */
+    private JacksonXMLDataFormat jacksonXml(Class<?> type) {
+        return jacksonXml(type, false);
+    }
+
+    /**
+     * @param type
+     * @param useWrapper - Jackson does not expect a wrapper to lists
+     * @return
+     */
+    private JacksonXMLDataFormat jacksonXml(Class<?> type, boolean useWrapper) {
+        JacksonXMLDataFormat dataFormat = new JacksonXMLDataFormat();
+        XmlMapper xmlMapper = new XmlMapper();
+        // By default jackson expects wrapper=true. disable
+        xmlMapper.setDefaultUseWrapper(useWrapper);
+        dataFormat.setXmlMapper(xmlMapper);
+        dataFormat.setUnmarshalType(type);
+        return dataFormat;
+    }
+
+
 }

@@ -10,8 +10,9 @@
     <packaging>pom</packaging>
 
     <properties>
-        <spring.boot>2.0.4.RELEASE</spring.boot>
+        <spring.boot>1.5.0.RELEASE</spring.boot>
         <camel.version>2.22.0</camel.version>
+        <jackson.version>2.6.1</jackson.version>
         <!--<spring-kafka.version>2.0.2.RELEASE</spring-kafka.version>-->
     </properties>
 
@@ -55,6 +56,12 @@
                 <groupId>org.apache.camel</groupId>
                 <artifactId>camel-jacksonxml</artifactId>
                 <version>${camel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-xml</artifactId>
+                <version>${jackson.version}</version>
             </dependency>
 
             <dependency>

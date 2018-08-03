@@ -18,7 +18,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = AppConfig.class)
+@SpringBootTest(classes = {AppConfig.class, TestConfig.class})
 @DirtiesContext
 public class AppTest {
     public static final AtomicBoolean IS_COMPLETE = new AtomicBoolean(false);

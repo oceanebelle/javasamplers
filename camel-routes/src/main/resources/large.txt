@@ -1,11 +1,18 @@
+<top>
 <root>
     <person>
        <name>FIRST</name>
     </person>
     <person>
        <name>SECOND</name>
+       <addresses>
+            <address>
+                <streetName>STREET</streetName>
+            </address>
+       </addresses>
     </person>
     <person>
        <name>THIRD</name>
     </person>
 </root>
+</top>

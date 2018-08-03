@@ -18,7 +18,7 @@ public class NotebookDataService {
         this.repository.save(notebook);
     }
 
-    public Notebook find(long id) {
+    public Notebook find(Long id) {
         return this.repository.findOne(id);
     }
 

@@ -47,6 +47,11 @@
             <artifactId>camel-jacksonxml</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+        </dependency>
+
 
         <!-- Testing -->
         <dependency>
