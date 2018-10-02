@@ -10,9 +10,12 @@
     <packaging>pom</packaging>
 
     <properties>
-        <spring.boot>1.5.0.RELEASE</spring.boot>
-        <camel.version>2.22.0</camel.version>
-        <jackson.version>2.6.1</jackson.version>
+        <!-- Pair of camel and spring boot 1.5 and 2.21-->
+        <spring.boot>1.5.16.RELEASE</spring.boot>
+        <camel.version>2.21.2</camel.version>
+        <!-- NOTE: Spring 2.0 is supported in camel 2.22-->
+
+        <jackson.version>2.9.1</jackson.version>
         <!--<spring-kafka.version>2.0.2.RELEASE</spring-kafka.version>-->
     </properties>
 
@@ -28,6 +31,15 @@
                 <scope>import</scope>
             </dependency>
 
+            <!-- Spring Boot BOM -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <dependency>
                 <groupId>org.apache.camel</groupId>
                 <artifactId>camel-quartz2</artifactId>
@@ -37,6 +49,12 @@
             <dependency>
                 <groupId>org.apache.camel</groupId>
                 <artifactId>camel-http</artifactId>
+                <version>${camel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-http4</artifactId>
                 <version>${camel.version}</version>
             </dependency>
 
@@ -59,25 +77,10 @@
             </dependency>
 
             <dependency>
-                <groupId>org.fasterxml.jackson.dataformat</groupId>
-                <artifactId>jackson-dataformat-xml</artifactId>
-                <version>${jackson.version}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>org.awaitility</groupId>
                 <artifactId>awaitility</artifactId>
                 <version>3.1.1</version>
                 <scope>test</scope>
-            </dependency>
-
-            <!-- Spring Boot BOM -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring.boot}</version>
-                <type>pom</type>
-                <scope>import</scope>
             </dependency>
 
 
@@ -149,12 +152,14 @@
 
     <modules>
         <module>apps</module>
-        <module>cassandrasample</module>
+        <!--Remove cassandra sample as not compatible with latest spring boot-->
+        <!--<module>cassandrasample</module>-->
         <module>angularspring</module>
         <module>entities-jpa</module>
         <module>all-about-tests</module>
         <module>camel-camel-camel</module>
         <module>camel-routes</module>
+        <module>scraper</module>
     </modules>
 
 
