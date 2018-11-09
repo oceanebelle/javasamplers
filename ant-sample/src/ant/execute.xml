@@ -1,0 +1,51 @@
+<project
+        xmlns:if="ant:if"
+        xmlns:unless="ant:unless"
+        default="main">
+    <target name="main">
+
+        <echo>Hello from script file!</echo>
+
+        <!-- for each matching directory call process-directory-task and pass binDir -->
+        <foreach param="binDir" target="process-directory-task">
+            <path>
+                <dirset dir="${project.build.directory}/bin/">
+                    <include name="**" />
+                </dirset>
+            </path>
+        </foreach>
+
+    </target>
+
+    <target name="process-directory-task">
+
+        <!-- Get the name of the directory and print -->
+        <basename property="artifactName" file="${binDir}"/>
+
+        <echo>${artifactName}</echo>
+
+        <!-- directory-har-artifact property is set if the folder has at least 1 jar- -->
+        <local name="directory-has-artifact" />
+        <condition property="directory-has-artifact">
+            <resourcecount when="greater" count="0">
+                <fileset dir="${binDir}" includes="*.jar"/>
+            </resourcecount>
+        </condition>
+
+        <!-- macrodef is executed if the directory-has-artifact property is set -->
+        <process-artifact-directory if:set="directory-has-artifact" artifactName="${artifactName}" artifactDir="${binDir}" />
+
+    </target>
+
+    <macrodef name="process-artifact-directory">
+        <attribute name="artifactName" />
+        <attribute name="artifactDir" />
+
+        <sequential>
+            <echo>ARTIFACT     : @{artifactName}</echo>
+            <echo>ARTIFACT DIR : @{artifactDir}</echo>
+        </sequential>
+
+    </macrodef>
+
+</project>
